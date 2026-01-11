@@ -26,11 +26,10 @@ To get the application up and running, follow these steps:
    cd courier-management-system
    ```
 
-   ```
+   ```bash
    git remote add origin https://github.com/Shaban-Seleman/courier-management-system.git
    git branch -M main
    git push -u origin main
-
    ```
 
 2. **Run the application:**
