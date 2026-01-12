@@ -33,6 +33,16 @@ services:
     networks:
       - courier-network
 
+  auth-service:
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    networks:
+      - courier-network
+
   frontend:
     build:
       context: ./frontend
@@ -42,6 +52,7 @@ services:
       - "3000:3000"
     depends_on:
       - order-service
+      - auth-service
     environment:
       - CHOKIDAR_USEPOLLING=true
     networks:
