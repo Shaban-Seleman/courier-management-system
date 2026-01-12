@@ -1,55 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
-
-interface Order {
-  orderId: string;
-  orderNumber: string;
-  status: string;
-  amount: number;
-}
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import ShipmentDashboard from './components/dashboard/ShipmentDashboard';
+import OrdersPage from './components/orders/OrdersPage';
+import CouriersPage from './components/couriers/CouriersPage';
+import BillingPage from './components/billing/BillingPage';
+import SettingsPage from './components/settings/SettingsPage';
 
 function App() {
-  const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
-    axios.get('/api/v1/orders')
-      .then(response => {
-        setOrders(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the orders!', error);
-      });
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Orders</h1>
-      </header>
-      <div className="order-list">
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Order Number</th>
-              <th>Status</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map(order => (
-              <tr key={order.orderId}>
-                <td>{order.orderId}</td>
-                <td>{order.orderNumber}</td>
-                <td>{order.status}</td>
-                <td>{order.amount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<ShipmentDashboard />} />
+          <Route path="/shipments" element={<OrdersPage />} />
+          <Route path="/couriers" element={<CouriersPage />} />
+          <Route path="/billing" element={<BillingPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 

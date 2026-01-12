@@ -232,6 +232,50 @@ GET    /api/v1/analytics/orders/summary
 - Retry policies
 - Distributed tracing
 
+### Frontend Architecture
+
+#### Application Structure
+The frontend is built as a Single Page Application (SPA) using React 18 and TypeScript, styled with Tailwind CSS.
+
+**Core Directories:**
+- `src/components/layout`: Main shell (Sidebar, Header)
+- `src/components/dashboard`: Analytic widgets and charts
+- `src/components/orders`: Order management forms and lists
+- `src/lib`: API clients and utilities
+- `src/pages`: Route-level page components
+
+#### Menu Structure & Routing
+
+1. **Dashboard** (`/`)
+   - Key Metrics (Total Shipments, Revenue, Active Couriers)
+   - Recent Activity Feed
+   - Performance Charts
+
+2. **Shipments** (`/shipments`)
+   - **List View:** Filterable table of all orders
+   - **Create Order:** Multi-step form for new shipments
+   - **Track:** Real-time map view of specific shipment
+
+3. **Couriers** (`/couriers`) *[Dispatcher/Admin Only]*
+   - **Fleet Overview:** Map showing all courier locations
+   - **Management:** Add/Edit courier profiles
+   - **Performance:** Individual courier stats
+
+4. **Billing** (`/billing`)
+   - Invoices and Payment History
+   - Payment Methods
+
+5. **Settings** (`/settings`)
+   - User Profile
+   - Notification Preferences
+   - Security (Password, MFA)
+
+#### UI/UX Design System
+- **Theme:** "Logistics Blue" primary palette with slate grays for structure.
+- **Icons:** Lucide React for consistent iconography.
+- **Components:** Modular, accessible UI components (Cards, Tables, Badges).
+- **Responsiveness:** Mobile-first design supporting field operations on tablets/phones.
+
 ---
 
 ## Technology Stack
@@ -888,7 +932,7 @@ POST /auth/logout
 ### Order Management API
 
 ```
-POST /orders
+POST   /api/v1/orders (Implemented)
   Request: {
     "pickupAddress": "123 Main St",
     "pickupCity": "New York",
@@ -913,7 +957,7 @@ POST /orders
     "amount": 25.50
   }
 
-GET /orders
+GET /orders (Implemented)
   Query: page=0&size=10&status=PENDING&sortBy=created_at
   Response: 200 OK
   {
@@ -922,7 +966,7 @@ GET /orders
     "totalPages": 10
   }
 
-GET /orders/{orderId}
+GET /orders/{orderId} (Implemented)
   Response: 200 OK
   {
     "orderId": "uuid",
@@ -935,24 +979,24 @@ GET /orders/{orderId}
     }
   }
 
-PUT /orders/{orderId}
+PUT /orders/{orderId} (Implemented)
   Request: {
     "deliveryAddress": "789 New St",
     "specialInstructions": "Updated instructions"
   }
   Response: 200 OK
 
-DELETE /orders/{orderId}
+DELETE /orders/{orderId} (Implemented)
   Response: 204 No Content
 
-POST /orders/{orderId}/cancel
+POST /orders/{orderId}/cancel (Implemented)
   Response: 200 OK
   {
     "orderId": "uuid",
     "status": "CANCELLED"
   }
 
-GET /orders/{orderId}/tracking
+GET /orders/{orderId}/tracking (Implemented)
   Response: 200 OK
   {
     "orderId": "uuid",
