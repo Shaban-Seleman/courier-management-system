@@ -1,3 +1,5 @@
+package com.courier.authservice.config;
+
 import com.courier.authservice.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

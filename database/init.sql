@@ -1,25 +1,3 @@
--- Users Table
-CREATE TABLE users (
-    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    username VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    phone VARCHAR(20),
-    role_id UUID NOT NULL,
-    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
-    last_login TIMESTAMP,
-    mfa_enabled BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(role_id)
-);
-
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_users_username ON users(username);
-CREATE INDEX idx_users_status ON users(status);
-
 -- Roles Table
 CREATE TABLE roles (
     role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -51,6 +29,28 @@ CREATE TABLE role_permissions (
     CONSTRAINT fk_role_perms FOREIGN KEY (role_id) REFERENCES roles(role_id),
     CONSTRAINT fk_perm_perms FOREIGN KEY (permission_id) REFERENCES permissions(permission_id)
 );
+
+-- Users Table
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    phone VARCHAR(20),
+    role_id UUID NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+    last_login TIMESTAMP,
+    mfa_enabled BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(role_id)
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_status ON users(status);
 
 -- Customers Table
 CREATE TABLE customers (
